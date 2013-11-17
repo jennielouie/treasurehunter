@@ -13,6 +13,8 @@ TreasureHunter::Application.routes.draw do
 
   get '/decline', to: 'hunts#decline'
 
+  get '/howtoplay/index', to: 'howtoplay#index'
+
   devise_for :users
 
   resources :users, except: [:show]
