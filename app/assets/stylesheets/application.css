@@ -342,7 +342,6 @@ li:hover {
 #user_email, #user_password, #sign_in_form {
   border-bottom: 20px;
 }
-
  /*responsive queries*/
 
 @media (min-width: 100px) and (max-width: 659px) {

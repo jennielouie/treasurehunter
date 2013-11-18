@@ -15,14 +15,17 @@ var infowindow;
 function makeMap(thisHuntData, role, prog){
   windowContent = [];
   markerArray = [];
-  var maxShowMarker;
-  function setMaxShowMarker (){
-    if (role==="hunter"){
-      maxShowMarker = prog-1;
-    }
-    else maxShowMarker = thisHuntData.loc.length;
-  };
-  setMaxShowMarker();
+
+  // Changed maxShowMarker b/c limiting of array now occurs in back end
+  var maxShowMarker = thisHuntData.loc.length;
+  // var maxShowMarker;
+  // function setMaxShowMarker (){
+  //   if (role==="hunter"){
+  //     maxShowMarker = prog-1;
+  //   }
+  //   else maxShowMarker = thisHuntData.loc.length;
+  // };
+  // setMaxShowMarker();
 
   //BEGIN OF CODE TO PLOT MAP
   JLcenter = new google.maps.LatLng(thisHuntData.loc[0].lat, thisHuntData.loc[0].long);
