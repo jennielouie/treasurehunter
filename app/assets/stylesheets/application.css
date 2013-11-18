@@ -342,6 +342,17 @@ li:hover {
 #user_email, #user_password, #sign_in_form {
   border-bottom: 20px;
 }
+
+.huntMasterInstructions, .hunterInstructions, .leaderBoard{
+  border: 2px solid #EDEDED;
+  background: linear-gradient(#A3A3A3, #EDEDED);
+  margin: auto;
+  margin-top: 20px;
+  clear: both;
+  padding: 5px 0 20px 30px;
+  border-radius: 5px;
+  width: 60%
+}
  /*responsive queries*/
 
 @media (min-width: 100px) and (max-width: 659px) {

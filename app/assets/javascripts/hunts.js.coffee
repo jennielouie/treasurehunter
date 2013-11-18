@@ -20,6 +20,7 @@ getHunts = ->
 
 
 getLeaders = (id) ->
+  #Pulls name and progress data from hunts hash
   call = $.ajax("/hunts/#{id}", {
       method: 'GET'
     })
@@ -28,10 +29,20 @@ getLeaders = (id) ->
   call.done (data) ->
 
     thisHuntData = data
+    # Setting up leaderboard
+    # Sorting hunters by progress
+    names = _.sortBy data.name, (p) ->
+      -p.prog
+    # Creating the list of hunters
+    leaders = "<h3>Progress of Each Player (total of #{data.loc.length} Treasures)</h3></br><ul>"
+    _.each names, (d) ->
+      leaders += "<li><p>#{d.name} is currently searching for Treasure #{d.prog}</p></li>"
+    leaders += "</ul>"
+
     role = "huntmaster"
-    $('.huntMasterDisplay').prepend("<div id ='leaderMapTitle'>Leader Map</div>")
+    $('.huntMasterDisplay').prepend("#{leaders}")
     $('.huntMasterDisplay').removeClass('display')
-    makeLeaderMap(thisHuntData)
+    # makeLeaderMap(thisHuntData)
 
 
 getLocations = (id) ->
@@ -597,8 +608,8 @@ $ ->
       $(this).addClass('active')
       if $('.huntMasterTabs').data('id')
         $('.huntMasterDisplay').empty()
-        if !($('.leaderMapView').hasClass('display'))
-          $('.leaderMapView').addClass('display')
+        if !($('.leaderView').hasClass('display'))
+          $('.leaderView').addClass('display')
         id = $('.huntMasterTabs').data('id')
         getLeaders(id)
 
@@ -725,9 +736,9 @@ $ ->
       names = _.sortBy data.name, (p) ->
         -p.prog
       # Creating the list of hunters
-      leaders = "<ul>"
+      leaders = "<h3>Progress of Each Player:</h3></br><ul>"
       _.each names, (d) ->
-        leaders += "<li><p>#{d.name}</p><p>#{d.prog}</p></li>"
+        leaders += "<li><p>#{d.name} is on Treasure #{d.prog}</p></li>"
       leaders += "</ul>"
 
       # Displaying the correct information based on which tab is currently active
