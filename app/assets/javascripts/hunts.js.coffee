@@ -34,12 +34,12 @@ getLeaders = (id) ->
     names = _.sortBy data.name, (p) ->
       -p.prog
     # Creating the list of hunters
-    leaders = "<h3>Progress of Each Player (total of #{data.loc.length} Treasures)</h3></br><ul>"
+    leaders = "<h3 style= 'letter-spacing: 10px; text-align: center'>Progress of Each Player (total of #{data.loc.length} Treasures)</h3><div class='leaderBoard'><ol>"
     _.each names, (d) ->
       leaders += "<li><p>#{d.name} is currently searching for Treasure #{d.prog}</p></li>"
-    leaders += "</ul>"
+    leaders += "</ol></div>"
 
-    role = "huntmaster"
+    # role = "huntmaster"
     $('.huntMasterDisplay').prepend("#{leaders}")
     $('.huntMasterDisplay').removeClass('display')
     # makeLeaderMap(thisHuntData)
@@ -736,10 +736,10 @@ $ ->
       names = _.sortBy data.name, (p) ->
         -p.prog
       # Creating the list of hunters
-      leaders = "<h3>Progress of Each Player:</h3></br><ul>"
+      leaders = "<h3 style= 'letter-spacing: 10px; text-align: center'>Progress of Each Player (total of #{data.loc.length} Treasures):</h3><div class='leaderBoard'><ul>"
       _.each names, (d) ->
         leaders += "<li><p>#{d.name} is on Treasure #{d.prog}</p></li>"
-      leaders += "</ul>"
+      leaders += "</ul></div>"
 
       # Displaying the correct information based on which tab is currently active
       if currentTab.hasClass('huntDetails')

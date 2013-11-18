@@ -343,7 +343,7 @@ li:hover {
   border-bottom: 20px;
 }
 
-.huntMasterInstructions, .hunterInstructions, .leaderBoard{
+.huntMasterInstructions, .hunterInstructions, .leaderBoard {
   border: 2px solid #EDEDED;
   background: linear-gradient(#A3A3A3, #EDEDED);
   margin: auto;
@@ -352,6 +352,10 @@ li:hover {
   padding: 5px 0 20px 30px;
   border-radius: 5px;
   width: 60%
+}
+
+.huntMasterInstructions ol li, .hunterInstructions ol li {
+  list-style-type: circle;
 }
  /*responsive queries*/
 
