@@ -11,80 +11,69 @@ var markerArray;
 var infowindow;
 
 
-// function makeLeaderMap(thisHuntData){
-//   windowContent = [];
-//   markerArray = [];
+function makeLeaderMap(thisHuntData){
+  windowContent = [];
+  markerArray = [];
 
-//   // Changed maxShowMarker b/c limiting of array now occurs in back end
-//   var maxShowMarker = thisHuntData.loc.length;
-//   //BEGIN OF CODE TO PLOT MAP
-//   JLcenter = new google.maps.LatLng(thisHuntData.loc[0].lat, thisHuntData.loc[0].long);
-//   var styles =
-// [
-//   {
-//     "featureType": "water",
-//     "stylers": [
-//       { "color": "#08519C" }
-//     ]
-//   }
-// ];
-//   JLmapTypeId = google.maps.MapTypeId.ROADMAP
-//     JLmapOptions = {
-//       zoom: 15,
-//       mapTypeId: JLmapTypeId,
-//       center: JLcenter
-//     };
-//   JLMap = new google.maps.Map(document.getElementById('leaderMap'), JLmapOptions);
-//   JLMap.setOptions({styles: styles});
+  // Changed maxShowMarker b/c limiting of array now occurs in back end
+  var maxShowMarker = thisHuntData.loc.length;
+  //BEGIN OF CODE TO PLOT MAP
+  JLcenter = new google.maps.LatLng(thisHuntData.loc[0].lat, thisHuntData.loc[0].long);
 
+  JLmapTypeId = google.maps.MapTypeId.ROADMAP
+    JLmapOptions = {
+      zoom: 15,
+      mapTypeId: JLmapTypeId,
+      center: JLcenter
+    };
+  JLMap = new google.maps.Map(document.getElementById('leaderMap'), JLmapOptions);
 
+  //END OF CODE TO PLOT MAP
+        var treasure = 'map_treasure.png';
+         var star = 'star_red_24.png';
+         // var marker;
+        var selectedMarker;
+    for (var i = 0; i < maxShowMarker; i++){
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(thisHuntData.loc[i].lat,thisHuntData.loc[i].long),
+          map: JLMap,
+          icon: treasure
+        });
+        markerArray[i]=marker;
+        marker.myIndex = i;
 
-//   //END OF CODE TO PLOT MAP
-//         var treasure = 'map_treasure.png';
-//          var star = 'star_red_24.png';
-//          // var marker;
-//         var selectedMarker;
-//     for (var i = 0; i < maxShowMarker; i++){
-//         var marker = new google.maps.Marker({
-//           position: new google.maps.LatLng(thisHuntData.loc[i].lat,thisHuntData.loc[i].long),
-//           map: JLMap,
-//           icon: treasure
-//         });
-//         markerArray[i]=marker;
-//         marker.myIndex = i;
+        //fill in content window with hunt details for huntmaster
+          var contentString ='<div> Clue number ' + thisHuntData.loc[i].clues[0].id + '</div>';
+          windowContent[i] = contentString;
 
-//         //fill in content window with hunt details for huntmaster
-//           var contentString ='<div> Clue number ' + thisHuntData.loc[i].clues[0].id + '</div>';
-//           windowContent[i] = contentString;
+            google.maps.event.addListener(marker, 'click', function() {
 
-//             google.maps.event.addListener(marker, 'click', function() {
-
-//                   this.setIcon(star);
-//                   for (var i=0; i<maxShowMarker; i++){
-//                     if (this != markerArray[i]) {
-//                         markerArray[i].setIcon(treasure)
-//                     }
-//                   }
-//               // document.getElementById('clickedLocInfo').innerHTML = windowContent[this.myIndex];
-//               // };
-//               if(infowindow) {
-//                   infowindow.close();
-//               }
-//               infowindow = new google.maps.InfoWindow({
-//               content: windowContent[this.myIndex]
-//               });
-//             infowindow.open(JLMap,this);
-//             });
+                  this.setIcon(star);
+                  for (var i=0; i<maxShowMarker; i++){
+                    if (this != markerArray[i]) {
+                        markerArray[i].setIcon(treasure)
+                    }
+                  }
+              // document.getElementById('clickedLocInfo').innerHTML = windowContent[this.myIndex];
+              // };
+              if(infowindow) {
+                  infowindow.close();
+              }
+              infowindow = new google.maps.InfoWindow({
+              content: windowContent[this.myIndex]
+              });
+            infowindow.open(JLMap,this);
+            });
 
 
-//     }
-//     google.maps.event.addDomListener(window, "resize", function() {
-//            // var center = JLMap.getCenter();
-//              google.maps.event.trigger(JLMap, "resize");
-//              JLMap.setCenter(JLcenter);
-//              console.log('resized');
-//             });
-// };
+    }
+    google.maps.event.addDomListener(window, "resize", function() {
+           // var center = JLMap.getCenter();
+             google.maps.event.trigger(JLMap, "resize");
+             JLMap.setCenter(JLcenter);
+             console.log('resized');
+            });
+};
 //makeMap uses json data for hunt to plot locations and show clues in infowindows
 function makeMap(thisHuntData, role, prog){
   windowContent = [];

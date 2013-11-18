@@ -19,20 +19,19 @@ getHunts = ->
     $('.huntList').prepend("<h3 style='letter-spacing: 10px'>Upcoming Hunts:</h3><br>")
 
 
-# getLeaders = (id) ->
+getLeaders = (id) ->
+  call = $.ajax("/hunts/#{id}", {
+      method: 'GET'
+    })
 
-#   call = $.ajax("/hunts/#{id}", {
-#       method: 'GET'
-#     })
+# After call is successful, the locations map is plotted
+  call.done (data) ->
 
-# # After call is successful, the locations map is plotted
-#   call.done (data) ->
-
-#     thisHuntData = data
-#     role = "huntmaster"
-#     $('.huntMasterDisplay').prepend("<div id ='leaderMap'>Leader Map</div>")
-#     $('.huntMasterDisplay').removeClass('display')
-#     makeLeaderMap(thisHuntData)
+    thisHuntData = data
+    role = "huntmaster"
+    $('.huntMasterDisplay').prepend("<div id ='leaderMapTitle'>Leader Map</div>")
+    $('.huntMasterDisplay').removeClass('display')
+    makeLeaderMap(thisHuntData)
 
 
 getLocations = (id) ->
@@ -582,7 +581,7 @@ $ ->
       else
         $('.huntMasterDisplay').append('<h3>Sorry! You need to save a hunt before you can add locations.</h3>')
     # If hunt locations is clicked
-    else #if currentTab.hasClass('huntMasterLocations')
+    else if currentTab.hasClass('huntMasterLocations')
       $('.huntMasterNav').removeClass('active')
       $(this).addClass('active')
       if $('.huntMasterTabs').data('id')
@@ -593,24 +592,16 @@ $ ->
         getLocations(id)
       else
         $('.huntMasterDisplay').append('<h3>Sorry! You need to save a hunt before you can add locations.</h3>')
-    #else #if currentTab.hasClass('huntMasterLocations')
-          # Make the ajax call to get the hunt information
-    # Display the hunt information after the ajax call is successful
-      # $.get("/hunts/#{id}").done (data) ->
+    else #if currentTab.hasClass('huntMasterLocations')
+      $('.huntMasterNav').removeClass('active')
+      $(this).addClass('active')
+      if $('.huntMasterTabs').data('id')
+        $('.huntMasterDisplay').empty()
+        if !($('.leaderMapView').hasClass('display'))
+          $('.leaderMapView').addClass('display')
+        id = $('.huntMasterTabs').data('id')
+        getLeaders(id)
 
-      # Setting up the participant names as a list
-      # Setting up leaderboard
-      # Sorting hunters by progress
-      # names = _.sortBy data.name, (p) ->
-      #   -p.prog
-      # # Creating the list of hunters
-      # leaders = "<ul>"
-      # _.each names, (d) ->
-      #   leaders += "<li><p>#{d.name}</p><p>#{d.prog}</p></li>"
-      # leaders += "</ul>"
-      # $('.huntMasterNav').removeClass('active')
-      # $(this).addClass('active')
-      # $('.huntMasterDisplay').prepend("<h1>where is the leader board?</h1>")
 
   # Adding a location to a hunt
   $('.addLocation').submit ->
