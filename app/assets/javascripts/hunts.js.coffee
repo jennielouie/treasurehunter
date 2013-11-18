@@ -19,20 +19,20 @@ getHunts = ->
     $('.huntList').prepend("<h3 style='letter-spacing: 10px'>Upcoming Hunts:</h3><br>")
 
 
-getLeaders = (id) ->
+# getLeaders = (id) ->
 
-  call = $.ajax("/hunts/#{id}", {
-      method: 'GET'
-    })
+#   call = $.ajax("/hunts/#{id}", {
+#       method: 'GET'
+#     })
 
-# After call is successful, the locations map is plotted
-  call.done (data) ->
+# # After call is successful, the locations map is plotted
+#   call.done (data) ->
 
-    thisHuntData = data
-    role = "huntmaster"
-    $('.huntMasterDisplay').prepend("<div>Map</div>")
-    $('.huntMasterDisplay').removeClass('display')
-    makeMap(thisHuntData, role)
+#     thisHuntData = data
+#     role = "huntmaster"
+#     $('.huntMasterDisplay').prepend("<div id ='leaderMap'>Leader Map</div>")
+#     $('.huntMasterDisplay').removeClass('display')
+#     makeLeaderMap(thisHuntData)
 
 
 getLocations = (id) ->
@@ -582,7 +582,7 @@ $ ->
       else
         $('.huntMasterDisplay').append('<h3>Sorry! You need to save a hunt before you can add locations.</h3>')
     # If hunt locations is clicked
-    else #if currentTab.hasClass('huntMasterClues')
+    else #if currentTab.hasClass('huntMasterLocations')
       $('.huntMasterNav').removeClass('active')
       $(this).addClass('active')
       if $('.huntMasterTabs').data('id')
@@ -593,7 +593,7 @@ $ ->
         getLocations(id)
       else
         $('.huntMasterDisplay').append('<h3>Sorry! You need to save a hunt before you can add locations.</h3>')
-    # else #If leader board is clicked
+    #else #if currentTab.hasClass('huntMasterLocations')
           # Make the ajax call to get the hunt information
     # Display the hunt information after the ajax call is successful
       # $.get("/hunts/#{id}").done (data) ->
@@ -610,7 +610,7 @@ $ ->
       # leaders += "</ul>"
       # $('.huntMasterNav').removeClass('active')
       # $(this).addClass('active')
-      # $('.huntMasterDisplay').prepend("<h1>HI</h1>")
+      # $('.huntMasterDisplay').prepend("<h1>where is the leader board?</h1>")
 
   # Adding a location to a hunt
   $('.addLocation').submit ->
@@ -622,7 +622,6 @@ $ ->
     question = $('#clueQuestion').val()
     answer = $('#clueAnswer').val()
     hint = $('#clueHint').val()
-
     # if all the felds arent filled in, an error is flashed
     if !(lat && long && name && question && answer && hint)
       $('#coordinates ul').empty()
